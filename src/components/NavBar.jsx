@@ -13,7 +13,6 @@ const NavBar = ()=>{
     return (
         <div className="w-full flex h-16 md:h-20 items-center justify-between">
             <Link to='/' className="flex items-center gap-4 text-2xl font-bold">
-                <Image src='/logo.png' alt="Logo" w={32} h={32}/>
                 <span>aBlog.</span>
             </Link>
             <div className="md:hidden">

@@ -6,6 +6,7 @@ import Comments from "../components/Comments";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import {format} from "timeago.js"
+import DOMPurify from "dompurify";
 
 const fetchPost = async (slug)=>{
     const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/posts/${slug}`)
@@ -20,6 +21,11 @@ const SinglePostPage = ()=>{
     })
     if(isPending) return <div>Loading...</div>
     if(isError) return <div>{error.message}</div>
+    function QuillContent(data) {
+        const cleanHtml = DOMPurify.sanitize(data);
+      
+        return <div className="ql-rendered-content" dangerouslySetInnerHTML={{ __html: cleanHtml }} />;
+      }
     return(
     <div className="flex flex-col gap-8">
         <div className="flex gap-8">
@@ -41,9 +47,9 @@ const SinglePostPage = ()=>{
             </div>}
             
         </div>
-        <div className="flex flex-col md:flex-row gap-12">
-            <div className="md:text-lg flex flex-col gap-6 text-justify">
-                {data?.content}    
+        <div className="flex flex-col md:flex-row justify-between gap-12">
+            <div className="quillContent md:text-lg flex flex-1 flex-col gap-6 text-justify">
+               {QuillContent(data?.content)}
             </div>
             <div className="p-4 h-full sticky top-8">
                 <h2 className="mb-4 text-sm font-medium">Author</h2>

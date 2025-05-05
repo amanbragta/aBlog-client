@@ -3,7 +3,7 @@ import 'react-quill-new/dist/quill.snow.css';
 import ReactQuill from 'react-quill-new';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Upload } from '../components/Upload';
@@ -11,13 +11,13 @@ import { Upload } from '../components/Upload';
 
 const Write = ()=>{
     const navigate = useNavigate()
+    const ref = useRef(null)
     const {getToken} = useAuth()
     const [value,setValue] = useState('')
     const [cover,setCover] = useState('')
     const [img,setImg] = useState('')
     const [video,setVideo] = useState('')
     const [progress,setProgress] = useState(0)
-    const {isLoaded,isSignedIn} = useUser();
     const {mutate,isPending,isError,error} = useMutation({
         mutationFn: async (newPost)=>{
             const token = await getToken()
@@ -45,14 +45,34 @@ const Write = ()=>{
         }
         mutate(data)
     }
+    function insertImage(){
+        const editor = ref.current.getEditor()
+        const range = editor.getSelection()
+        editor.insertEmbed(range.index,"image",img.url)
+    }
 
     useEffect(()=>{
-        img && setValue(prev=>prev+`<p><image src=${img.url} /></p>`)
+        // img && setValue(prev=>prev+`<p class="ql-rendered-content"><img src=${img.url}/></p>`)
+        if(img){
+        const editor = ref.current.getEditor()
+        const range = editor.getSelection()
+        editor.insertEmbed(range?.index,"image",img.url)
+        editor.setSelection(range?.index + 1, 0);
+        editor.insertText(range?.index + 1, "\n");
+        }
     },[img])
+
     useEffect(()=>{
-        video && setValue(prev=>prev+`<p><iframe class="ql-video" src=${video.url}/></p>`)
+        //video && setValue(prev=>prev+`<p><iframe class="ql-video" src=${video.url}/></p>`)
+        if(video){
+            const editor = ref.current.getEditor()
+            const range = editor.getSelection()
+            editor.insertEmbed(range?.index,"video",video.url)
+            editor.setSelection(range?.index + 1, 0);
+            editor.insertText(range?.index + 1, "\n");
+            }
     },[video])
-    
+   
     // if(!isLoaded) return <div>Loading...</div>
     // if(isLoaded && !isSignedIn) return <div>Sign in to write a post.</div>
     return(
@@ -89,7 +109,7 @@ const Write = ()=>{
 
                     </Upload>
                 </div>
-            <ReactQuill theme="snow" className='flex-1 rounded-xl bg-white shadow-md' value={value} onChange={setValue} readOnly={0<progress && progress<100}/>
+            <ReactQuill ref={ref} theme="snow" className='flex-1 rounded-xl bg-white shadow-md' value={value} onChange={setValue} readOnly={0<progress && progress<100}/>
             </div>
             
             <button disabled={isPending || (0<progress && progress<100)} className='bg-blue-800 text-white rounded-xl p-2 w-36 mt-4 font-medium disabled:bg-blue-400 disabled:cursor-not-allowed'>

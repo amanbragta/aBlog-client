@@ -20,3 +20,21 @@ body{
 .ql-editor{
     border: none !important;
 }
+
+.ql-editor img {
+    width: 100%;
+    border-radius: 8px;
+    margin: 12px 0;
+    height: 50vh;
+    object-fit: cover;
+    object-position: center 20%;
+  }
+
+  .ql-rendered-content img{
+    width: 100%;
+    border-radius: 8px;
+    margin: 12px 0;
+    height: 50vh;
+    object-fit: cover;
+    object-position: center 20%;
+  }
