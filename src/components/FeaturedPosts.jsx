@@ -55,7 +55,7 @@ const FeaturedPosts = ()=>{
                 </div>}
                 <div className='w-2/3'>
                     <div className='flex items-center gap-4 text-sm lg:text-base mb-4'>
-                        <h2 className='font-semibold'>02.</h2>
+                        <h2 className='font-semibold'>03.</h2>
                         <Link to={`posts?category=${posts[2].category}`} className='text-blue-800'>{posts[2].category}</Link>
                         <span className='text-gray-500 text-sm'>{format(posts[2].createdAt)}</span>
                     </div>
@@ -70,13 +70,13 @@ const FeaturedPosts = ()=>{
                 </div>}
                 <div className='w-2/3'>
                     <div className='flex items-center gap-4 text-sm lg:text-base mb-4'>
-                        <h2 className='font-semibold'>02.</h2>
+                        <h2 className='font-semibold'>04.</h2>
                         <Link to={`posts?category=${posts[3].category}`} className='text-blue-800'>{posts[3].category}</Link>
                         <span className='text-gray-500 text-sm'>{format(posts[3].createdAt)}</span>
                     </div>
                     <Link to={`/${posts[3].slug}`} className='text-base sm:text-lg md:text-2xl lg:text-xl xl:text-2xl font-medium'>
                     
-                    {posts[1].title}</Link>
+                    {posts[3].title}</Link>
                 </div>
                 </div>}
             </div>

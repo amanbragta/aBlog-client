@@ -1,5 +1,4 @@
 import { useAuth, useUser } from "@clerk/clerk-react";
-import Image from "./Image";
 import {format} from "timeago.js"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";

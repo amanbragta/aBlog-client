@@ -1,15 +1,10 @@
-import { useEffect, useState } from "react";
-import Image from "./Image";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { SignedIn, SignedOut, useAuth, UserButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 
 const NavBar = ()=>{
     const [open,setOpen] = useState(false)
-    const {getToken} = useAuth()
 
-    useEffect(()=>{
-       getToken().then(()=>{})
-    },[])
     return (
         <div className="w-full flex h-16 md:h-20 items-center justify-between">
             <Link to='/' className="flex items-center gap-4 text-2xl font-bold">

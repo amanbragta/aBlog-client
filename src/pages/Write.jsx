@@ -1,4 +1,4 @@
-import {useAuth, useUser} from '@clerk/clerk-react';
+import {useAuth} from '@clerk/clerk-react';
 import 'react-quill-new/dist/quill.snow.css';
 import ReactQuill from 'react-quill-new';
 import { useMutation } from '@tanstack/react-query';
@@ -18,7 +18,7 @@ const Write = ()=>{
     const [img,setImg] = useState('')
     const [video,setVideo] = useState('')
     const [progress,setProgress] = useState(0)
-    const {mutate,isPending,isError,error} = useMutation({
+    const {mutate,isPending} = useMutation({
         mutationFn: async (newPost)=>{
             const token = await getToken()
             return axios.post(`${import.meta.env.VITE_API_URL}/posts`,newPost,{
@@ -44,11 +44,6 @@ const Write = ()=>{
             content:value
         }
         mutate(data)
-    }
-    function insertImage(){
-        const editor = ref.current.getEditor()
-        const range = editor.getSelection()
-        editor.insertEmbed(range.index,"image",img.url)
     }
 
     useEffect(()=>{
@@ -82,7 +77,7 @@ const Write = ()=>{
             <Upload type='image' setProgress={setProgress} setData={setCover}>
             <button className='w-max p-2 shadow-md rounded-xl text-sm text-gray-500 bg-white'>Add a cover image</button>
             </Upload>
-            <input type='text' className='text-4xl font-semibold bg-transparent outline-none' name='title' placeholder="My awesome story"/>
+            <input type='text' className='text-4xl font-semibold bg-transparent outline-none' name='title' placeholder="My awesome story" required/>
             <div className='flex gap-4 items-center'>
                 <label htmlFor='category' className='text-sm'>Choose a category:</label>
                 <select name='category' id='category' className='p-2 rounded-xl bg-white shadow-md'>
