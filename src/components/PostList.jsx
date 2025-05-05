@@ -20,6 +20,7 @@ const PostList = ()=>{
         data,
         fetchNextPage,
         isFetchingNextPage,
+        isPending
       } = useInfiniteQuery({
         queryKey: ['posts',searchParams.toString()],
         queryFn: ({pageParam})=>fetchPosts(pageParam,searchParams),
@@ -35,6 +36,7 @@ const PostList = ()=>{
    
     return (
     <div>
+      {isPending && <span>Loading...</span>}
          {data?.pages.map((pageData) => {
           return pageData.posts.map((post)=><PostListItem key={post._id} post={post} />)
          }

@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import {format} from "timeago.js"
 import DOMPurify from "dompurify";
+import {useUser} from '@clerk/clerk-react'
 
 const fetchPost = async (slug)=>{
     const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/posts/${slug}`)
@@ -19,6 +20,7 @@ const SinglePostPage = ()=>{
         queryKey:["post",slug],
         queryFn:()=>fetchPost(slug)
     })
+    const {user} = useUser();
     if(isPending) return <div>Loading...</div>
     if(isError) return <div>{error.message}</div>
     function QuillContent(data) {
@@ -73,7 +75,7 @@ const SinglePostPage = ()=>{
                         </div>
                     </div>
                     
-                    <PostMenuActions post={data}/>
+                    {user && <PostMenuActions post={data}/>}
                     <h2 className="mt-8 mb-4 text-sm font-medium">Categories</h2>
                     <div className="flex flex-col gap-2 text-sm">
                         <Link className="underline">All</Link>

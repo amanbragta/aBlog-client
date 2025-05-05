@@ -50,6 +50,10 @@ const Comments = ({postId})=>{
 
     const handleForm = e =>{
         e.preventDefault();
+        if(!user){
+            toast.error("Login to comment.")
+            return
+        }
         const formData = new FormData(e.target)
         const data = {
             desc:formData.get("desc")

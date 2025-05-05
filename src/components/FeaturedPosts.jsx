@@ -25,10 +25,10 @@ const FeaturedPosts = ()=>{
             {posts[0] && <Image src={posts[0].img} className='rounded-3xl object-cover' w='895'/>}
                 <div className='flex items-center gap-4'>
                     <h2 className='font-semibold lg:text-lg'>01.</h2>
-                    <Link to='/' className='text-blue-800 lg:text-lg'>{posts[0].category}</Link>
+                    <Link to={`/posts?cat=${posts[0].category}`} className='text-blue-800 lg:text-lg'>{posts[0].category}</Link>
                     <span className='text-gray-500'>{format(posts[0].createdAt)}</span>
                 </div>
-                <Link to='/test' className='text-xl lg:text-3xl font-semibold lg:font-bold'>
+                <Link to={`/${posts[0].slug}`} className='text-xl lg:text-3xl font-semibold lg:font-bold'>
                     {posts[0].title}
                 </Link>
             </div>

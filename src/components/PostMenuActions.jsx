@@ -46,7 +46,6 @@ const PostMenuActions = ({post})=>{
                         return {...oldData,data:[...newList]}
                     })
                 }
-                console.log(queryClient.getQueryData(["savedPosts"]))
                 return prevData;
               },
             
@@ -63,7 +62,7 @@ const PostMenuActions = ({post})=>{
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-            });
+            },{withCredentials:true});
           },
         onSuccess: ()=>{
             toast.success("Deleted successfully.")
