@@ -30,7 +30,7 @@ const SinglePostPage = ()=>{
       }
     return(
     <div className="flex flex-col gap-8">
-        <div className="flex gap-8">
+        <div className="flex gap-8 flex-col lg:flex-row">
             <div className="lg:w-3/5 flex flex-col gap-8">
                 <h1 className="text-xl md:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">{data?.title}</h1>
                 <div className="flex items-center gap-2 text-gray-400 text-sm">
@@ -44,8 +44,8 @@ const SinglePostPage = ()=>{
                     {data?.desc}
                 </p>
             </div>
-            {data?.img && <div className="hidden lg:block w-2/5">
-                <Image src={data.img} w='600' className='rounded-2xl'/>
+            {data?.img && <div className="w-full md:hidden lg:block lg:w-2/5">
+                <Image src={data.img} w='600' h='500' className='rounded-2xl w-full'/>
             </div>}
             
         </div>

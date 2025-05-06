@@ -22,8 +22,8 @@ const NavBar = ()=>{
                 </div>
                 <div className={`z-10 bg-[#e6e6ff] w-full h-screen flex flex-col items-center justify-center absolute top-16 gap-8 font-medium text-lg transition-all ease-in-out ${open? '-right-0':'-right-[100%]'}`}>
                 <Link to='/'>Home</Link>
-                <Link to='/'>Trending</Link>
-                <Link to='/'>Most Popular</Link>
+                <Link to='/posts?sort=trending'>Trending</Link>
+                <Link to='/posts?sort=popular'>Most Popular</Link>
                 <Link to='/'>About</Link>
                 <SignedOut>
                 <Link to='/login'>
@@ -37,8 +37,8 @@ const NavBar = ()=>{
             </div>
             <div className="hidden md:flex items-center gap-8 xl:gap-12 font-medium">
                 <Link to='/'>Home</Link>
-                <Link to='/'>Trending</Link>
-                <Link to='/'>Most Popular</Link>
+                <Link to='/posts?sort=trending'>Trending</Link>
+                <Link to='/posts?sort=popular'>Most Popular</Link>
                 <Link to='/'>About</Link>
                 <SignedOut>
                 <Link to='/login'>

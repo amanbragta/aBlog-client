@@ -17,7 +17,11 @@ const Write = ()=>{
     const [cover,setCover] = useState('')
     const [img,setImg] = useState('')
     const [video,setVideo] = useState('')
+    const [title,setTitle] = useState('')
     const [progress,setProgress] = useState(0)
+    const [coverErr,setCoverErr] = useState('')
+    const [titleErr,setTitleErr] = useState('')
+    const [quillErr,setQuillErr] = useState('')
     const {mutate,isPending} = useMutation({
         mutationFn: async (newPost)=>{
             const token = await getToken()
@@ -36,15 +40,23 @@ const Write = ()=>{
     const handleSubmit=(e)=>{
         e.preventDefault();
         const formData = new FormData(e.target);
+        if(!cover) return setCoverErr("Please add a cover for the post.")
+        if(!formData.get('title')) return setTitleErr("Please add a title for the post.")
+        const plainText = value.replace(/<[^>]+>/g, "").trim();
+        if(!plainText) return setQuillErr("Content cannot be empty.")
         const data = {
             img:cover.filePath || "",
-            title:formData.get("title"),
+            title,
             desc:formData.get("desc"),
             category:formData.get("category"),
             content:value
         }
         mutate(data)
     }
+
+    useEffect(()=>{
+        if (progress==100) setCoverErr("")
+    },[progress])
 
     useEffect(()=>{
         // img && setValue(prev=>prev+`<p class="ql-rendered-content"><img src=${img.url}/></p>`)
@@ -76,8 +88,11 @@ const Write = ()=>{
         <form onSubmit={handleSubmit} className='flex flex-col gap-6 flex-1 mb-6'>
             <Upload type='image' setProgress={setProgress} setData={setCover}>
             <button className='w-max p-2 shadow-md rounded-xl text-sm text-gray-500 bg-white'>Add a cover image</button>
+            {progress ? <span className='ml-2 text-xs'>Upload progress: {progress}</span>:""}
+            {!cover && coverErr && <span className='ml-2 text-xs text-red-500'>{coverErr}</span>}
             </Upload>
-            <input type='text' className='text-4xl font-semibold bg-transparent outline-none' name='title' placeholder="My awesome story" required/>
+            <input type='text' className='text-4xl font-semibold bg-transparent outline-none' name='title' value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="My awesome story"/>
+            {!title && titleErr && <span className='text-xs text-red-500'>{titleErr}</span>}
             <div className='flex gap-4 items-center'>
                 <label htmlFor='category' className='text-sm'>Choose a category:</label>
                 <select name='category' id='category' className='p-2 rounded-xl bg-white shadow-md'>
@@ -106,7 +121,7 @@ const Write = ()=>{
                 </div>
             <ReactQuill ref={ref} theme="snow" className='flex-1 rounded-xl bg-white shadow-md' value={value} onChange={setValue} readOnly={0<progress && progress<100}/>
             </div>
-            
+            {quillErr && <span className='text-xs text-red-500'>{quillErr}</span>}
             <button disabled={isPending || (0<progress && progress<100)} className='bg-blue-800 text-white rounded-xl p-2 w-36 mt-4 font-medium disabled:bg-blue-400 disabled:cursor-not-allowed'>
                 {isPending?"Loading...":"Send"}
             </button>
