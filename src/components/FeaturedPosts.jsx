@@ -20,6 +20,8 @@ const FeaturedPosts = ()=>{
     if(isError) return <div>{error.message}</div>
 
     return (
+        <div className='mt-6'>
+            <h2 className='text-2xl text-gray-600'>Featured Posts</h2>
         <div className="mt-8 flex flex-col lg:flex-row gap-8">
             <div className="w-full lg:w-1/2 flex flex-col gap-8">
             {posts[0] && <Image src={posts[0].img} className='rounded-3xl object-cover' w='895'/>}
@@ -80,6 +82,7 @@ const FeaturedPosts = ()=>{
                 </div>
                 </div>}
             </div>
+        </div>
         </div>
     )
 }
